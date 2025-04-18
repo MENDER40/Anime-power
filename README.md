@@ -95,14 +95,15 @@ local Window = Fluent:CreateWindow({
 })
 
 local Tabs = {
-    Info = Window:AddTab({ Title = "Info", Icon = "scroll" }),
-    Farm = Window:AddTab({ Title = "Farm", Icon = "rbxassetid://18831424669" }),
-    Player = Window:AddTab({ Title = "Player", Icon ="sword" }),
-    Defense = Window:AddTab({ Title = "Defense", Icon = "sword" }),
-    Eggs = Window:AddTab({ Title = "Hatch", Icon = "egg" }),
-    Dungeon = Window:AddTab({ Title = "Dungeon", Icon ="sword" }),
-    Raid = Window:AddTab({ Title = "Raid", Icon ="sword" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
+    Info = Window:AddTab({ Title = "Info", Icon = "rbxassetid://77473995449278" }),
+    Farm = Window:AddTab({ Title = "Farm", Icon = "rbxassetid://140251526987992" }),
+    Player = Window:AddTab({ Title = "Player", Icon ="rbxassetid://131528850280887" }),
+    Upgrades = Window:AddTab({ Title = "Upgrades", Icon ="rbxassetid://77669617316317"}),
+    Defense = Window:AddTab({ Title = "Defense", Icon = "rbxassetid://140251526987" }),
+    Eggs = Window:AddTab({ Title = "Hatch", Icon = "rbxassetid://74532559013474" }),
+    Dungeon = Window:AddTab({ Title = "Dungeon", Icon ="rbxassetid://101216544797779" }),
+    Raid = Window:AddTab({ Title = "Raid", Icon ="rbxassetid://140251526987992" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "rbxassetid://105210425187745" }),
 }
 
 Tabs.Info:AddParagraph({
@@ -126,6 +127,11 @@ end)
 
 local Rank= Tabs.Player:AddToggle("Rank", {Title = "Rank Up", Default = false})
 Rank:OnChanged(function()
+    local args = {
+    [1] = "rankup"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
     while Rank.Value do
 wait(10)
            end
@@ -155,19 +161,48 @@ wait(15)
            end
 end)
 
-local AutoClick= Tabs.Player:AddToggle("AutoClick", {Title = "upgrade grimoire 1", Default = false})
-AutoClick:OnChanged(function()
-    while AutoClick.Value do
+local Quest= Tabs.Player:AddToggle("Quest", {Title = "upgrade grimoire 1", Default = false})
+Quest:OnChanged(function()
+    while Quest.Value do
+local args = {
+    [1] = "setQuest",
+    [2] = "gemsQuest"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+wait(60)
+           end
+end)
+--PLAYER
+
+--UPGRADES
+local Grimoire= Tabs.Upgrades:AddToggle("Grimoire", {Title = "upgrade grimoire 1", Default = false})
+Grimoire:OnChanged(function()
+    while Grimoire.Value do
 local args = {
     [1] = "upgradeGrimoire",
     [2] = 1
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
-wait(10)
+wait(2)
            end
 end)
---PLAYER
+
+local Damage= Tabs.Upgrades:AddToggle ("Damage", {Titlr = "Upgrade Damage", Default = false}) 
+Damage:OnChanged(function()
+    while Damage.Value do
+local args = {
+    [1] = "buyUpgrade",
+    [2] = "damageBoost"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+wait(2)
+  end
+    end)
+--UPGRADES
+
 --JOIN DEFENSE
 local autodefense= Tabs.Defense:AddToggle("autodefense", {Title = "Auto Join defense", Default = false})
 
@@ -338,9 +373,23 @@ wait(2)
     end
 end)
 
+local Medium= Tabs.Dungeon:AddToggle("Medium", {Title = "Auto Join insane", Default = false})
+
+Medium:OnChanged(function() 
+    while Medium.Value do
+local args = {
+    [1] = "joinDungeon",
+    [2] = "dungeon medium"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+wait(2)
+  end
+    end)
+
 local Insane= Tabs.Dungeon:AddToggle("Insane", {Title = "Auto Join insane", Default = false})
 
-Insane:OnChanged(function()
+Insane:OnChanged(function() 
     while Insane.Value do
 --remote
 local args = {
@@ -369,6 +418,22 @@ game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events
 wait(4)
     end
 end)
+local Jraid= Tabs.Raid:AddToggle("Insane", {Title = "Auto arise", Default = false})
+
+Jraid:OnChanged(function()
+    while Jraid.Value do
+--remote
+local args = {
+    [1] = "arise"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+wait(1) 
+end
+end)
+
+
+
 --RAID
 
 --ANTAFK
@@ -390,3 +455,80 @@ Toggle:OnChanged(function(state)
     end
 end)
 --ANTAFK
+
+
+
+
+
+
+local args = {
+    [1] = "joinDungeon",
+    [2] = "dungeon medium"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+
+
+
+local args = {
+    [1] = "setQuest",
+    [2] = "gemsQuest"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+
+
+
+
+
+
+
+
+
+
+
+--AUTO SPIN
+    Spin:AddButton({
+    Title = "Spin sword",
+    Callback = function()
+local args = {
+    [1] = "rollSwords",
+    [2] = "one"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+
+print("roletado")
+    end
+})
+--AUTO SPIN
+
+local AutoClick= Tabs.Eggs:AddToggle("AutoClick", {Title = "shinobi world", Default = false})
+AutoClick:OnChanged(function()
+    while AutoClick.Value do
+    local args = {
+    [1] = "rollChampion",
+    [2] = "one",
+    [3] = "shinobi world"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+wait(0)
+           end
+end)
+
+
+
+local AutoClick= Tabs.Eggs:AddToggle("AutoClick", {Title = "boar tavern", Default = false})
+AutoClick:OnChanged(function()
+    while AutoClick.Value do
+    local args = {
+    [1] = "rollChampion",
+    [2] = "one",
+    [3] = "boar tavern"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("events"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+wait(0)
+           end
+end)
